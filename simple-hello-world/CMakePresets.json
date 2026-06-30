@@ -1,0 +1,102 @@
+{
+  "version": 6,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 28,
+    "patch": 0
+  },
+  "include": [],
+  "configurePresets": [
+    {
+      "name": "default",
+      "displayName": "Default Configuration",
+      "generator": "Ninja Multi-Config",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "cacheVariables": {
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
+      }
+    },
+    {
+      "name": "default-static",
+      "displayName": "Default Configuration - Static SDL3",
+      "inherits": ["default"],
+      "cacheVariables": {
+        "SDL_STATIC": "ON",
+        "SDL_SHARED": "OFF"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "default-build",
+      "hidden": true,
+      "configurePreset": "default",
+      "inheritConfigureEnvironment": true
+    },
+    {
+      "name": "debug",
+      "inherits": ["default-build"],
+      "configuration": "Debug"
+    },
+    {
+      "name": "release",
+      "inherits": ["default-build"],
+      "configuration": "Release"
+    },
+    {
+      "name": "default-build-static",
+      "hidden": true,
+      "configurePreset": "default-static",
+      "inheritConfigureEnvironment": true
+    },
+    {
+      "name": "debug-static",
+      "inherits": ["default-build-static"],
+      "configuration": "Debug"
+    },
+    {
+      "name": "release-static",
+      "inherits": ["default-build-static"],
+      "configuration": "Release"
+    }
+  ],
+  "testPresets": [],
+  "workflowPresets": [
+    {
+      "name": "build-all",
+      "displayName": "Build all targets for Debug and Release configurations.",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "default"
+        },
+        {
+          "type": "build",
+          "name": "debug"
+        },
+        {
+          "type": "build",
+          "name": "release"
+        }
+      ]
+    },
+    {
+      "name": "build-all-static",
+      "displayName": "Build all targets for Debug and Release configurations.",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "default-static"
+        },
+        {
+          "type": "build",
+          "name": "debug-static"
+        },
+        {
+          "type": "build",
+          "name": "release-static"
+        }
+      ]
+    }
+  ]
+}
